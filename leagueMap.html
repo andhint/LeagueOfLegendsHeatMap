@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Test</title>
+        <script type="text/javascript" src="d3/d3.v3.js"></script>
+        <style type="text/css">
+            
+        </style>
+    </head>
+    <body>
+        
+        <script type="text/javascript">
+            var w = 512;
+            var h = 512;
+            var numBoxes = 128;
+            var boxSize = w / numBoxes;
+
+
+            var dataset = [];
+            for ( var i = 0; i < numBoxes; i++){
+                for (var j = 0; j < numBoxes; j++){
+                    dataset.push([i, j, Math.random()])
+                }
+
+            };
+            
+            console.log(dataset)
+
+
+            var bg = "https://s3-us-west-1.amazonaws.com/riot-api/img/minimap-ig.png";
+
+            var svg = d3.select('body')
+                         .append('svg')
+                         .attr('width', w)
+                         .attr('height', h);
+
+            svg.append('image')
+                .attr('xlink:href', bg)
+                .attr('x', '0')
+                .attr('y', '0')
+                .attr('width', w)
+                .attr('height', h);
+
+            svg.selectAll('rect')
+               .data(dataset)
+               .enter()
+               .append('rect')
+               .attr('x', function(d) {
+                return d[0] * boxSize ;
+                })
+               .attr('y', function(d) {
+                return d[1] * boxSize;
+               })
+               .attr('width', boxSize)
+               .attr('height', boxSize)
+               .attr('opacity', function(d){
+                return d[2] ;
+               })
+               .attr('fill', 'red')
+               ;
+
+
+
+
+        </script>
+    
+    </body>
+</html>     
