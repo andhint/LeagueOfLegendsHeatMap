@@ -21,7 +21,7 @@ def getMatchIds(summonerId):
 	#
 	# returns : matchIds , a list of all matchId numbers for every ranked game played by the player
 	# get Match IDS
-	url = 'https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/' + str(summonerId) + '?api_key=f70f9a95-b58f-4784-aa28-cf2b6d7724b6'
+	url = 'https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/' + str(summonerId) + '?api_key=[API KEY HERE]'
 	response = requests.get(url)
 	response_json = response.json()
 
@@ -51,7 +51,7 @@ def getPositionData(matchIds, data):
 		# build url for API request
 
 		#print(matchId)
-		url = 'https://na.api.pvp.net/api/lol/na/v2.2/match/' + str(matchId) + '?includeTimeline=true&api_key=f70f9a95-b58f-4784-aa28-cf2b6d7724b6'
+		url = 'https://na.api.pvp.net/api/lol/na/v2.2/match/' + str(matchId) + '?includeTimeline=true&api_key=[API KEY HERE]'
 		#print(url)
 		response = requests.get(url)
 		response_json = response.json()
@@ -91,7 +91,11 @@ def writeToFile(data):
 	#
 	# creates a text file with the data in the same directory as the script
 	textFile = open("heatMapData.txt", "w")
-	textFile.write(data)
+	for item in data:
+		textFile.write(str(item[0]))
+		textFile.write(',')
+		textFile.write(str(item[1]))
+		textFile.write("\n")
 	textFile.close()
 
 
@@ -103,7 +107,7 @@ def main():
 	#print(matchIds)
 	data = []
 	data = getPositionData(matchIds, data)
-	writeToFile(str(data))
+	writeToFile(data)
 	
 
 
